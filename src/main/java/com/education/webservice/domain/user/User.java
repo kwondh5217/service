@@ -1,4 +1,4 @@
-package com.education.service.user;
+package com.education.webservice.domain.user;
 
 
 import lombok.Builder;
@@ -22,22 +22,29 @@ public class User {
     @Column(nullable = false)
     private String email;
 
-    @Column(nullable = false)
-    private String provider;
-
-    @Column(nullable = false)
-    private String nickname;
-
     @Column
     private String picture;
 
+    @Enumerated(EnumType.STRING)
+    @Column
+    private Role role;
+
     @Builder
-    public User(Long id, String name, String email, String provider, String nickname, String picture) {
+    public User(Long id, String name, String email, String picture, Role role) {
         this.id = id;
         this.name = name;
         this.email = email;
-        this.provider = provider;
-        this.nickname = nickname;
         this.picture = picture;
+        this.role = Role.USER;
+    }
+
+    public User update(String name, String picture) {
+        this.name = name;
+        this.picture = picture;
+
+        return this;
+    }
+    public String getRoleKey() {
+        return this.role.getKey();
     }
 }
